@@ -1,79 +1,107 @@
 // modules
-import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { View, TextInput } from 'react-native'
+import React, { useState } from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+} from 'react-native';
+import CountryPicker, { Country } from 'react-native-country-picker-modal'
 
-// context
-import { AuthContext } from '../../context/auth/auth';
+// utils
+import { setWidth, setHeight } from "../../utils/display"
 
-const FormInputPhone = ({ ...props }: any) => {
+const FormInputPhone = ({ navigation, ...props }: any) => {
 
-    const navigation = useNavigation<any>()
+    const [isVisible, setisVisible] = useState(false)
 
-    const { LoginSmsClientes, isAuth } = useContext(AuthContext);
+    const [phoneNumber, setPhoneNumber] = useState("");
 
-    const [otp, setotp] = useState<String[]>(new Array(4).fill(""))
+    const [countryCode, setCountryCode] = useState<any>("MX")
 
-    const [activeOTPIndex, setactiveOTPIndex] = useState(0)
+    const [callingCode, setcallingCode] = useState("52")
 
-    const inputRef = useRef<any>(null)
-
-    const onChangeInput = (value: any, index: number) => {
-
-        const newOTP: String[] = [...otp];
-
-        newOTP[index] = value.substring(value.length - 1);
-
-        if (!value) setactiveOTPIndex(index - 1);
-        else setactiveOTPIndex(index + 1);
-        if (value === "Backspace") setactiveOTPIndex(index - 1)
-        setotp(newOTP);
+    const onSelect = (country: Country) => {
+        setCountryCode(country.cca2)
+        setcallingCode(country.callingCode[0])
+        console.log(country)
     }
 
-    // console.log(String(otp).replace(/,/g, ''));
-
-    useEffect(() => {
-        inputRef.current?.focus()
-    }, [activeOTPIndex])
-
-    useEffect(() => {
-        if (otp.length === 4) {
-            LoginSmsClientes(String(otp).replace(/,/g, ''))
-        }
-        if (isAuth) {
-            navigation.navigate("WelcomeScreen")
-        }
-    }, [otp, isAuth])
-
     return (
-        <View className="w-full flex flex-col justify-center items-center px-8">
-            <View
-                className="w-full flex flex-row justify-center items-center px-4 my-3"
+        <View>
+            <View className="w-full flex flex-row justify-center items-center bg-color-01 border-[1.5px] border-color-07 rounded-3xl"
+                style={{
+                    width: setWidth(80),
+                }}
             >
-                {otp.map((_, index) => {
-                    return (
-                        <View key={index}>
-                            <TextInput
-                                {...props}
-                                ref={index === activeOTPIndex ? inputRef : null}
-                                className="w-12 h-12 border-2 rounded-xl mx-2 bg-color-03 outline-none text-center font-semibold text-xl border-color-01 focus:border-color-04 focus:text-color-02 text-color-04"
-                                keyboardType="numeric"
-                                onChangeText={(e) => onChangeInput(e, index)}
-                                onKeyPress={({ nativeEvent }) => {
-                                    if (nativeEvent.key === 'Backspace') {
-                                        setactiveOTPIndex(index - 1)
-                                    }
-                                }}
-                                // value={otp[index]}
-                                value={otp[index]}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                            />
-                        </View>
-                    )
-                })}
+                <CountryPicker
+                    onSelect={onSelect}
+                    withEmoji
+                    withFilter
+                    withFlag
+                    countryCode={countryCode}
+                    withCallingCode
+                    visible={isVisible}
+                    onClose={() => setisVisible(false)}
+                    translation={"spa"}
+                    region={"Americas"}
+                    theme={{
+                        filterPlaceholderTextColor: "#999",
+                    }}
+                    containerButtonStyle={{
+                        width: 30
+                    }}
+                    modalProps={{
+                        animationType: "fade"
+                    }}
+                    filterProps={{
+                        placeholder: "Buscar",
+                        style: {
+                            borderBottomColor: "#111",
+                            width: "100%",
+                            height: 70,
+                        },
+                    }}
+                    flatListProps={{
+                        contentContainerStyle: {
+                            paddingHorizontal: 10,
+                        },
+                    }}
+                    {...props}
+                />
+                <View
+                    className="flex justify-center items-center"
+                    style={{
+                        width: setWidth(15),
+                        height: setHeight(6),
+                    }}
+                >
+                    <Text className="text-color-02 text-base">{`+${callingCode}`}</Text>
+                </View>
+                <TextInput
+                    className="text-color-02 text-base flex justify-center items-center ml-1"
+                    style={{
+                        width: setWidth(50),
+                        height: setHeight(6),
+                    }}
+                    placeholder="Ingresa tu numero"
+                    placeholderTextColor={"#999"}
+                    selectionColor={"#111"}
+                    keyboardType="number-pad"
+                    onChangeText={
+                        (text) => {
+                            setPhoneNumber(`+${callingCode}${text}`)
+                            console.log(`+${callingCode}${text}`)
+                        }
+                    }
+                />
             </View>
+            {/* <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('Verification', { phoneNumber })}>
+                <Text style={styles.signinButtonText}>Contiue</Text>
+            </TouchableOpacity> */}
         </View>
+
     );
 };
 

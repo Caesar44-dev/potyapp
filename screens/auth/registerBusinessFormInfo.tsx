@@ -1,24 +1,101 @@
 // modules
-import React, { useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import { Picker } from '@react-native-picker/picker';
+import React, { useContext, useState } from 'react'
+import { View, Text, Image, TouchableOpacity, SafeAreaView, Keyboard } from 'react-native'
+// import { PhoneNumberUtil } from "google-libphonenumber";
 
 // components
 import FormInput from '../../components/form/formInput';
+import FormSelect from '../../components/form/formSelect';
 
-// icons
-import FormSelectDropdown from '../../components/form/formSelectDropdown';
+// context
+import { AuthContext } from '../../context/auth/auth';
+
+// utils
+import { width_container } from "../../utils/display"
+
+// configs
+// const phoneUtil = PhoneNumberUtil.getInstance();
 
 const RegisterBusinessFormInfo = ({ navigation }: any) => {
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
-
     // api simulation
-    const [companyName, setcompanyName] = useState();
-    const [location, setlocation] = useState();
-    const [addressCompany, setaddressCompany] = useState();
-    const [specialization, setspecialization] = useState();
-    const [phoneNumber, setphoneNumber] = useState();
+    const [companyName, setcompanyName] = useState("");
+    const [location, setlocation] = useState("");
+    const [addressCompany, setaddressCompany] = useState("");
+    const [specialization, setspecialization] = useState("");
+    const [phoneNumber, setphoneNumber] = useState("");
+
+    // validation
+    const [errors, seterrors] = useState<any>({});
+    const [loading, setloading] = useState<any>(false);
+
+    // context simulation api
+    const { login } = useContext(AuthContext);
+
+    const validate = () => {
+        Keyboard.dismiss();
+        let isValid = true;
+
+        if (!companyName) {
+            handleError('Campo requerido', 'companyName');
+            isValid = false;
+        }
+
+        if (!location) {
+            handleError('Campo requerido', 'location');
+            isValid = false;
+        }
+
+        if (!addressCompany) {
+            handleError('Campo requerido', 'addressCompany');
+            isValid = false;
+        }
+
+        if (!specialization) {
+            handleError('Campo requerido', 'specialization');
+            isValid = false;
+        }
+
+        // if (!inputs.email) {
+        //     handleError('Porfavor ingrese un correo', 'email');
+        //     isValid = false;
+
+        // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+        //     handleError('Porfavor ingrese un correo valido', 'email');
+        //     isValid = false;
+        // }
+
+        // if (!inputs.password) {
+        //     handleError('Please input password', 'password');
+        //     isValid = false;
+
+        // } else if (inputs.password.length < 5) {
+        //     handleError('Min password length of 5', 'password');
+        //     isValid = false;
+        // }
+
+        // const parsedNumber = phoneUtil.parse(phoneNumber, "MX");
+        // if (phoneUtil.isValidNumber(parsedNumber)) {
+        //     handleError('Campo requerido', 'phoneNumber');
+        //     isValid = false;
+        // }
+
+        if (!phoneNumber) {
+            handleError('Campo requerido', 'phoneNumber');
+            isValid = false;
+        }
+
+        if (isValid) {
+            login();
+            navigation.navigate('RegisterBusinessFormMap');
+        }
+    };
+
+
+    const handleError = (error: any, input: any) => {
+        seterrors((prevState: any) => ({ ...prevState, [input]: error }));
+    };
 
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
@@ -45,70 +122,54 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                 <View className="w-full flex justify-center items-center">
                     <FormInput
                         labelValue={companyName}
-                        onChangeText={(companyName: any) => setcompanyName(companyName)}
                         placeholderText="Nombre de la empresa"
-                        iconType="home"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        iconName="home"
+                        error={errors.companyName}
+                        onChangeText={(companyName: any) => setcompanyName(companyName)}
+                        onFocus={() => handleError(null, 'companyName')}
                     />
-
-                    <FormSelectDropdown
-                        title={"Lugar"}
-                        data={["Monterrey, Nuevo Leon", "lugar 2", "lugar 3"]}
-                        onSelect={({ selectedItem, index }: any) => {
-                            console.log(selectedItem, index)
-                            setlocation(selectedItem)
-                        }}
-                        buttonTextAfterSelection={({ selectedItem, index }: any) => {
-                            // text represented after item is selected
-                            // if data array is an array of objects then return selectedItem.property to render after item is selected
-                            return selectedItem
-                        }}
-                        rowTextForSelection={({ item, index }: any) => {
-                            // text represented for each item in dropdown
-                            // if data array is an array of objects then return item.property to represent item in dropdown
-                            return item
-                        }}
-                    />
-
+                    <FormSelect
+                        selectedValue={location}
+                        error={errors.location}
+                        onValueChange={(itemValue: any) => setlocation(itemValue)}
+                        onFocus={() => handleError(null, 'location')}
+                    >
+                        <Picker.Item label={"Selecione el lugar"} value={null} enabled={false} />
+                        <Picker.Item label={"Monterrey, Nuevo leon"} value={"location1"} enabled={true} />
+                        <Picker.Item label={"location 2"} value={"location2"} enabled={true} />
+                        <Picker.Item label={"location 3"} value={"location3"} enabled={true} />
+                    </FormSelect>
                     <FormInput
                         labelValue={addressCompany}
-                        onChangeText={(addressCompany: any) => setaddressCompany(addressCompany)}
                         placeholderText="Direccion de la empresa"
-                        iconType="enviroment"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        iconName="enviroment"
+                        error={errors.addressCompany}
+                        onChangeText={(addressCompany: any) => setaddressCompany(addressCompany)}
+                        onFocus={() => handleError(null, 'addressCompany')}
                     />
-                    <FormSelectDropdown
-                        title={"Rubro de especializacion"}
-                        data={["Barberia", "Especializacion 1", "Especializacion 2"]}
-                        onSelect={({ selectedItem, index }: any) => {
-                            console.log(selectedItem, index)
-                            setspecialization(selectedItem)
-                        }}
-                        buttonTextAfterSelection={({ selectedItem, index }: any) => {
-                            // text represented after item is selected
-                            // if data array is an array of objects then return selectedItem.property to render after item is selected
-                            return selectedItem
-                        }}
-                        rowTextForSelection={({ item, index }: any) => {
-                            // text represented for each item in dropdown
-                            // if data array is an array of objects then return item.property to represent item in dropdown
-                            return item
-                        }}
-                    />
+                    <FormSelect
+                        selectedValue={specialization}
+                        error={errors.specialization}
+                        onValueChange={(itemValue: any) => setspecialization(itemValue)}
+                        onFocus={() => handleError(null, 'specialization')}
+                    >
+                        <Picker.Item label={"Selecione una especializacion"} value={null} enabled={false} />
+                        <Picker.Item label={"Barberia"} value={"specialization1"} enabled={true} />
+                        <Picker.Item label={"specialization 2"} value={"specialization2"} enabled={true} />
+                        <Picker.Item label={"specialization 3"} value={"specialization3"} enabled={true} />
+                    </FormSelect>
                     <FormInput
                         labelValue={phoneNumber}
+                        placeholderText="Telefono"
+                        iconName="phone"
+                        error={errors.phoneNumber}
                         onChangeText={(phoneNumber: any) => setphoneNumber(phoneNumber)}
-                        placeholderText="Numero de telefono"
-                        iconType="phone"
-                        keyboardType="numeric"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        onFocus={() => handleError(null, 'phoneNumber')}
+                        keyboardType={"numeric"}
                     />
                 </View>
                 <View className="w-full px-10 pt-6 flex flex-row justify-center items-center">
-                    <View className="w-10 h-10 border-2 border-color-08 rounded-full flex justify-center items-center">
+                    <View className="w-12 h-12 border-2 border-color-08 rounded-full flex justify-center items-center">
                         <Text className="text-color-09 text-lg">
                             1
                         </Text>
@@ -139,7 +200,8 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         <Text className="text-color-01 text-lg">Regresar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterBusinessFormMap')}
+                        onPress={validate}
+                        // onPress={() => navigation.navigate('RegisterBusinessFormMap')}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Siguiente</Text>

@@ -1,12 +1,12 @@
 // modules
 import React, { useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 
-const RegisterBusinessFormInfo = ({ navigation }: any) => {
+// utils
+import { width_container } from "../../utils/display"
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+const RegisterBusinessFormInfo = ({ navigation }: any) => {
 
     // example country
     const [origin, setorigin] = useState({
@@ -67,7 +67,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                     <View className="w-14 h-[2px] bg-color-08 my-5 mx-1 justify-center">
                         <View className="w-2 h-2 bg-color-08 rounded-full"></View>
                     </View>
-                    <View className="w-10 h-10 border-2 border-color-08 rounded-full flex justify-center items-center">
+                    <View className="w-12 h-12 border-2 border-color-08 rounded-full flex justify-center items-center">
                         <Text className="text-color-09 text-lg">
                             2
                         </Text>

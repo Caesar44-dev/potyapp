@@ -1,20 +1,77 @@
 // modules
-import React, { useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { View, Text, Image, TouchableOpacity, SafeAreaView, Keyboard } from 'react-native'
 
 // components
 import FormInput from '../../components/form/formInput';
 
+// context
+import { AuthContext } from '../../context/auth/auth';
+
+// utils
+import { width_container } from "../../utils/display"
+
 const RegisterBusinessFormInfo = ({ navigation }: any) => {
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+    // api simulation
+    const [nameOwner, setnameOwner] = useState("");
+    const [dniOwner, setdniOwner] = useState("");
+    const [phoneNumber, setphoneNumber] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
 
-    const [nameOwner, setnameOwner] = useState();
-    const [dniOwner, setdniOwner] = useState();
-    const [phoneNumber, setphoneNumber] = useState();
-    const [email, setemail] = useState();
-    const [password, setpassword] = useState();
+    // validation
+    const [errors, seterrors] = useState<any>({});
+
+    // context simulation api
+    const { login } = useContext(AuthContext);
+
+    const validate = () => {
+        Keyboard.dismiss();
+        let isValid = true;
+
+        if (!nameOwner) {
+            handleError('Campo requerido', 'nameOwner');
+            isValid = false;
+        }
+
+        if (!dniOwner) {
+            handleError('Campo requerido', 'dniOwner');
+            isValid = false;
+        }
+
+        if (!phoneNumber) {
+            handleError('Campo requerido', 'phoneNumber');
+            isValid = false;
+        }
+
+        if (!email) {
+            handleError('Campo requerido', 'email');
+            isValid = false;
+
+        } else if (!email.match(/\S+@\S+\.\S+/)) {
+            handleError('Campo invalido', 'email');
+            isValid = false;
+        }
+
+        if (!password) {
+            handleError('Campo requerido', 'password');
+            isValid = false;
+
+        } else if (password.length < 5) {
+            handleError('Longitud mínima de la contraseña de 5', 'password');
+            isValid = false;
+        }
+
+        if (isValid) {
+            login();
+            navigation.navigate('HomeScreen');
+        }
+    };
+
+    const handleError = (error: any, input: any) => {
+        seterrors((prevState: any) => ({ ...prevState, [input]: error }));
+    };
 
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
@@ -38,49 +95,48 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
             >
                 <Text className="text-color-02 text-2xl">POTY Empresa</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
-                <View className="w-full">
+                <View className="w-full flex justify-center items-center">
                     <FormInput
                         labelValue={nameOwner}
-                        onChangeText={(nameOwner: any) => setnameOwner(nameOwner)}
                         placeholderText="Nombre responsable"
-                        iconType="user"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        iconName="user"
+                        error={errors.nameOwner}
+                        onChangeText={(nameOwner: any) => setnameOwner(nameOwner)}
+                        onFocus={() => handleError(null, 'nameOwner')}
                     />
                     <FormInput
                         labelValue={dniOwner}
-                        onChangeText={(dniOwner: any) => setdniOwner(dniOwner)}
                         placeholderText="DNI responsable"
-                        iconType="idcard"
-                        keyboardType="numeric"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        iconName="idcard"
+                        error={errors.dniOwner}
+                        onChangeText={(dniOwner: any) => setdniOwner(dniOwner)}
+                        onFocus={() => handleError(null, 'dniOwner')}
                     />
                     <FormInput
                         labelValue={phoneNumber}
+                        placeholderText="Telefono"
+                        iconName="phone"
+                        error={errors.phoneNumber}
                         onChangeText={(phoneNumber: any) => setphoneNumber(phoneNumber)}
-                        placeholderText="Numero de telefono"
-                        iconType="phone"
-                        keyboardType="numeric"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        onFocus={() => handleError(null, 'phoneNumber')}
+                        keyboardType={"numeric"}
                     />
                     <FormInput
                         labelValue={email}
-                        onChangeText={(email: any) => setemail(email)}
                         placeholderText="Correo electronico"
-                        iconType="mail"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                        iconName="mail"
+                        error={errors.email}
+                        onChangeText={(email: any) => setemail(email)}
+                        onFocus={() => handleError(null, 'email')}
                     />
                     <FormInput
                         labelValue={password}
-                        onChangeText={(password: any) => setpassword(password)}
                         placeholderText="Contraseña"
-                        iconType="lock"
+                        iconName="lock"
                         secureTextEntry={true}
+                        error={errors.password}
+                        onChangeText={(password: any) => setpassword(password)}
+                        onFocus={() => handleError(null, 'password')}
                     />
                 </View>
                 <View className="w-full px-10 pt-6 flex flex-row justify-center items-center">
@@ -100,7 +156,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                     <View className="w-14 h-[2px] bg-color-08 my-5 mx-1 justify-center">
                         <View className="w-2 h-2 bg-color-08 rounded-full"></View>
                     </View>
-                    <View className="w-10 h-10 border-2 border-color-08 rounded-full flex justify-center items-center">
+                    <View className="w-12 h-12 border-2 border-color-08 rounded-full flex justify-center items-center">
                         <Text className="text-color-09 text-lg">
                             3
                         </Text>
@@ -115,7 +171,8 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         <Text className="text-color-01 text-lg">Regresar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterBusinessFormMap')}
+                        onPress={validate}
+                        // onPress={() => navigation.navigate('RegisterBusinessFormMap')}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Siguiente</Text>

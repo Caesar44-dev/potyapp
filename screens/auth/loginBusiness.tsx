@@ -1,6 +1,6 @@
 // modules
 import React, { useContext, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity, SafeAreaView, Modal } from 'react-native'
 
 // context
 import { AuthContext } from '../../context/auth/auth';
@@ -8,10 +8,10 @@ import { AuthContext } from '../../context/auth/auth';
 // components
 import FormInput from '../../components/form/formInput';
 
-const LoginBusinessScreen = ({ navigation }: any) => {
+// utils
+import { width_container } from "../../utils/display"
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+const LoginBusinessScreen = ({ navigation }: any) => {
 
     // states
     const [email, setEmail] = useState();
@@ -62,7 +62,7 @@ const LoginBusinessScreen = ({ navigation }: any) => {
                         labelValue={email}
                         onChangeText={(userEmail: any) => setEmail(userEmail)}
                         placeholderText="Correo Electronico"
-                        iconType="user"
+                        iconName="user"
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -71,7 +71,7 @@ const LoginBusinessScreen = ({ navigation }: any) => {
                         labelValue={password}
                         onChangeText={(userPassword: any) => setPassword(userPassword)}
                         placeholderText="Contraseña"
-                        iconType="lock"
+                        iconName="lock"
                         secureTextEntry={true}
                     />
                 </View>
@@ -109,7 +109,7 @@ const LoginBusinessScreen = ({ navigation }: any) => {
                                     labelValue={email}
                                     onChangeText={(recoverEmail: any) => setrecoverEmail(recoverEmail)}
                                     placeholderText="Correo Electronico"
-                                    iconType="user"
+                                    iconName="user"
                                     keyboardType="email-address"
                                     autoCapitalize="none"
                                     autoCorrect={false}

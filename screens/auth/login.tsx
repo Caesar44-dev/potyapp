@@ -1,6 +1,6 @@
 // modules
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 
 // icons
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -8,11 +8,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+// utils
+import { width_container } from "../../utils/display"
+
 const LoginScreen = ({ navigation }: any) => {
-
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
-
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
             <Image

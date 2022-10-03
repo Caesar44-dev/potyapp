@@ -1,14 +1,14 @@
 // modules
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 
 // icons
-import FormInputPhone from '../../components/form/formInputPhone';
+import FormInputPhoneOTP from '../../components/form/formInputPhoneOTP';
 
-const LoginClientScreen = ({ navigation }: any) => {
+// utils
+import { width_container } from "../../utils/display"
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+const ValidatePhoneNumberScreen = ({ navigation }: any) => {
 
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
@@ -41,7 +41,7 @@ const LoginClientScreen = ({ navigation }: any) => {
                 <Text className="text-color-02 text-2xl">Confirma tu número</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                 <Text className="text-color-02 text-base pt-2 pb-5 px-10 text-center font-bold">Revisa el PIN enviado a tu número celular y digitalo aquí</Text>
-                <FormInputPhone />
+                <FormInputPhoneOTP />
                 <TouchableOpacity className="my-4"
                 // onPress={() => navigation.navigate('')}
                 >
@@ -59,4 +59,4 @@ const LoginClientScreen = ({ navigation }: any) => {
     );
 };
 
-export default LoginClientScreen;
+export default ValidatePhoneNumberScreen;

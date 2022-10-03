@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Screens
-import LoginClientScreen from '../auth/loginClient';
+import ValidatePhoneNumberScreen from '../auth/validatePhoneNumber';
 import LoginScreen from '../auth/login';
 import RegisterScreen from '../auth/register';
 import LoginBusinessScreen from '../auth/loginBusiness';
@@ -14,15 +14,15 @@ import RegisterClientFormScreen from '../auth/registerClientForm';
 import RegisterBusinessFormInfo from '../auth/registerBusinessFormInfo';
 import RegisterBusinessFormOwner from '../auth/registerBusinessFormOwner';
 import RegisterBusinessFormMap from '../auth/registerBusinessFormMap';
+import HomeScreen from '../home/home';
 
 // configs
 const Stack = createNativeStackNavigator()
 
+// utils
+import { width_container } from "../../utils/display"
+
 const WelcomeScreen = ({ navigation }: any) => {
-
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
-
     return (
         <SafeAreaView>
             <LinearGradient
@@ -93,7 +93,7 @@ const WelcomeNav = () => {
 
             {/* logins */}
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="LoginClientScreen" component={LoginClientScreen} />
+            <Stack.Screen name="ValidatePhoneNumberScreen" component={ValidatePhoneNumberScreen} />
             <Stack.Screen name="LoginBusinessScreen" component={LoginBusinessScreen} />
 
             {/* registers */}
@@ -106,6 +106,9 @@ const WelcomeNav = () => {
             <Stack.Screen name="RegisterBusinessFormInfo" component={RegisterBusinessFormInfo} />
             <Stack.Screen name="RegisterBusinessFormMap" component={RegisterBusinessFormMap} />
             <Stack.Screen name="RegisterBusinessFormOwner" component={RegisterBusinessFormOwner} />
+
+            {/* home */}
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
         </Stack.Navigator>
     )

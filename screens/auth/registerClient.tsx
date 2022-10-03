@@ -1,19 +1,46 @@
 // modules
 import React, { useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView, Modal } from 'react-native'
-import PhoneInput from "react-native-phone-input"
+import { View, Text, Image, TouchableOpacity, SafeAreaView, Modal, TextInput } from 'react-native'
+import CountryPicker, { Country } from 'react-native-country-picker-modal'
+import { PhoneNumberUtil } from "google-libphonenumber";
 
-const RegisterClientScreen = ({ navigation }: any) => {
+// utils
+import { setWidth, setHeight, width_container } from "../../utils/display"
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+// configs
+const phoneUtil = PhoneNumberUtil.getInstance();
+
+const RegisterClientScreen = ({ navigation, ...props }: any) => {
 
     const [phoneNumber, setphoneNumber] = useState("");
 
-    const [isModalVisible, setisModalVisible] = useState(false);
+    const [error, seterror] = useState(false)
 
-    const changeModalVisible = (bool: boolean) => {
-        setisModalVisible(bool);
+    const [isModalVisible, setisModalVisible] = useState(false);
+    const [isVisible, setisVisible] = useState(false)
+
+    const [countryCode, setCountryCode] = useState<any>("MX")
+
+    const [callingCode, setcallingCode] = useState("52")
+
+    const onSelect = (country: Country) => {
+        setCountryCode(country.cca2)
+        setcallingCode(country.callingCode[0])
+        console.log(country)
+    }
+
+    const validPhoneNumber = () => {
+        const parsedNumber = phoneUtil.parse(phoneNumber, countryCode);
+        if (phoneUtil.isValidNumber(parsedNumber)) {
+            setisModalVisible(true)
+            seterror(false)
+            console.log("isValid")
+        }
+        else {
+            console.log("error")
+            seterror(true)
+            setisModalVisible(false)
+        }
     }
 
     return (
@@ -52,23 +79,72 @@ const RegisterClientScreen = ({ navigation }: any) => {
                 <Text className="text-color-02 text-sm pt-2 pb-5 px-10 text-center font-bold">
                     Puede aplicarse las tarifas estandar para tu mensaje
                 </Text>
-                <View className="w-full flex flex-row justify-center items-center pb-4">
-                    <View className="w-3/4 bg-color-05">
-                        <PhoneInput
+                <View className="w-full flex flex-row justify-center items-center pb-2">
+                    <View className="w-full flex flex-row justify-center items-center bg-color-01 border-[1.5px] border-color-07 rounded-3xl"
+                        style={{
+                            width: setWidth(75),
+                        }}
+                    >
+                        <CountryPicker
+                            onSelect={onSelect}
+                            withEmoji
+                            withFilter
+                            withFlag
+                            countryCode={countryCode}
+                            withCallingCode
+                            visible={isVisible}
+                            onClose={() => setisVisible(false)}
+                            translation={"spa"}
+                            region={"Americas"}
+                            theme={{
+                                filterPlaceholderTextColor: "#999",
+                            }}
+                            containerButtonStyle={{
+                                width: 30
+                            }}
+                            modalProps={{
+                                animationType: "fade"
+                            }}
+                            filterProps={{
+                                placeholder: "Buscar",
+                                style: {
+                                    borderBottomColor: "#111",
+                                    width: "100%",
+                                    height: 70,
+                                },
+                            }}
+                            flatListProps={{
+                                contentContainerStyle: {
+                                    paddingHorizontal: 10,
+                                },
+                            }}
+                            {...props}
+                        />
+                        <View
+                            className="flex justify-center items-center"
                             style={{
-                                width: "100%",
+                                width: setWidth(15),
+                                height: setHeight(6),
                             }}
-                            flagStyle={{
-                                width: 40,
-                                height: 40,
+                        >
+                            <Text className="text-color-02 text-base">{`+${callingCode}`}</Text>
+                        </View>
+                        <TextInput
+                            className="text-color-02 text-base flex justify-center items-center ml-1"
+                            style={{
+                                width: setWidth(45),
+                                height: setHeight(6),
                             }}
-                            textStyle={{
-                                color: "#111"
-                            }}
-                            initialCountry={"mx"}
-                            autoFormat={true}
-                            initialValue={phoneNumber}
-                            onChangePhoneNumber={(phoneNumber) => setphoneNumber(phoneNumber)}
+                            placeholder="Ingresa tu numero"
+                            placeholderTextColor={"#999"}
+                            selectionColor={"#111"}
+                            keyboardType="number-pad"
+                            onChangeText={
+                                (text) => {
+                                    setphoneNumber(`+${callingCode}${text}`)
+                                    // console.log(`+${callingCode}${text}`)
+                                }
+                            }
                         />
                     </View>
                 </View>
@@ -76,7 +152,7 @@ const RegisterClientScreen = ({ navigation }: any) => {
                     transparent={true}
                     animationType={"fade"}
                     visible={isModalVisible}
-                    onRequestClose={() => changeModalVisible(false)}
+                    onRequestClose={() => setisModalVisible(false)}
                 >
                     <TouchableOpacity
                         disabled={true}
@@ -104,7 +180,7 @@ const RegisterClientScreen = ({ navigation }: any) => {
                                     </Text>
                                 </View>
                                 <TouchableOpacity className="my-4"
-                                    onPress={() => changeModalVisible(false)}
+                                    onPress={() => setisModalVisible(false)}
                                 >
                                     <Text className="text-base font-bold text-color-04 text-center">
                                         ¿Tu numero esta incorrecto?
@@ -115,18 +191,13 @@ const RegisterClientScreen = ({ navigation }: any) => {
                                 </TouchableOpacity>
                                 <View className="w-full flex flex-row justify-center items-center">
                                     <TouchableOpacity
-                                        onPress={() => changeModalVisible(false)}
+                                        onPress={() => setisModalVisible(false)}
                                         className="flex justify-center items-center w-2/5 h-12 bg-color-08 my-2 mx-2 rounded-2xl"
                                     >
                                         <Text className="text-color-01 text-lg">Regresar</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        onPress={() => {
-                                            if (phoneNumber.length >= 13 && phoneNumber.length >= 14) {
-                                                navigation.navigate('LoginClientScreen')
-                                            }
-                                            else changeModalVisible(false)
-                                        }}
+                                        onPress={() => navigation.navigate("ValidatePhoneNumberScreen")}
                                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                                     >
                                         <Text className="text-color-01 text-lg">Iniciar</Text>
@@ -136,6 +207,13 @@ const RegisterClientScreen = ({ navigation }: any) => {
                         </View>
                     </TouchableOpacity>
                 </Modal>
+                {error && (
+                    <View className="py-2">
+                        <Text className="text-sm font-bold text-[#ff2334]">
+                            Porfavor ingrese un numero valido
+                        </Text>
+                    </View>
+                )}
                 <View className="w-full flex flex-row justify-center items-center">
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
@@ -144,7 +222,7 @@ const RegisterClientScreen = ({ navigation }: any) => {
                         <Text className="text-color-01 text-lg">Regresar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => changeModalVisible(true)}
+                        onPress={validPhoneNumber}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Iniciar</Text>

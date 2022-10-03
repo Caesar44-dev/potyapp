@@ -1,6 +1,6 @@
 // modules
 import React, { useContext, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 
 // context
 import { AuthContext } from '../../context/auth/auth';
@@ -8,10 +8,10 @@ import { AuthContext } from '../../context/auth/auth';
 // components
 import FormInput from '../../components/form/formInput';
 
-const RegisterClientFormScreen = ({ navigation }: any) => {
+// utils
+import { width_container } from "../../utils/display"
 
-    const width = Dimensions.get("window").width;
-    const width_container = width * 0.8;
+const RegisterClientFormScreen = ({ navigation }: any) => {
 
     const [name, setname] = useState();
     const [phoneNumber, setphoneNumber] = useState();
