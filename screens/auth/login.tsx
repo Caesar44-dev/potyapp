@@ -11,6 +11,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 // utils
 import { width_container } from "../../utils/display"
 
+/**
+ * LoginScreen
+ * * El inicio de sesion tiene un diseño que dificulta hacerlo responsive a todos los tamaños de dispositivos moviles,
+ * * la cual algunos dispositivos seran afectados por el tamaño de el diseño maquetado en codigo
+ * 
+ * ! Recomiendo mejorar el diseño y plantear mejor el sistema de inicio de sesiones
+ */
+
 const LoginScreen = ({ navigation }: any) => {
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
@@ -30,7 +38,7 @@ const LoginScreen = ({ navigation }: any) => {
                 source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                 style={{
                     width: "100%",
-                    height: width_container * 0.75,
+                    height: width_container * 0.6,
                     resizeMode: "contain",
                 }}
             />
@@ -40,7 +48,7 @@ const LoginScreen = ({ navigation }: any) => {
                     width: width_container * 1.1,
                 }}
             >
-                <Text className="text-color-02 text-2xl">Iniciar sesión como</Text>
+                <Text className="text-color-02 text-xl">Iniciar sesión como</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                 <View className="w-full flex justify-center items-center">
                     <TouchableOpacity
@@ -52,7 +60,7 @@ const LoginScreen = ({ navigation }: any) => {
                         <Feather name={"scissors"} size={22} color={"#F2F1F1"} />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterClientScreen')}
+                        onPress={() => navigation.navigate('LoginPhoneScreen')}
                         className="flex flex-row justify-between items-center w-3/4 h-12 bg-color-04 my-2 rounded-2xl px-8"
                     >
                         <AntDesign name={"user"} size={25} color={"#F2F1F1"} />

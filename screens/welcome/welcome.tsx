@@ -9,11 +9,11 @@ import ValidatePhoneNumberScreen from '../auth/validatePhoneNumber';
 import LoginScreen from '../auth/login';
 import RegisterScreen from '../auth/register';
 import LoginBusinessScreen from '../auth/loginBusiness';
-import RegisterClientScreen from '../auth/registerClient';
+import LoginPhoneScreen from '../auth/loginPhone';
 import RegisterClientFormScreen from '../auth/registerClientForm';
-import RegisterBusinessFormInfo from '../auth/registerBusinessFormInfo';
-import RegisterBusinessFormOwner from '../auth/registerBusinessFormOwner';
-import RegisterBusinessFormMap from '../auth/registerBusinessFormMap';
+import RegisterBusinessFormInfoScreen from '../auth/registerBusinessFormInfo';
+import RegisterBusinessFormOwnerScreen from '../auth/registerBusinessFormOwner';
+import RegisterBusinessFormMapScreen from '../auth/registerBusinessFormMap';
 import HomeScreen from '../home/home';
 
 // configs
@@ -21,6 +21,10 @@ const Stack = createNativeStackNavigator()
 
 // utils
 import { width_container } from "../../utils/display"
+
+/**
+ * WelcomeScreen
+ */
 
 const WelcomeScreen = ({ navigation }: any) => {
     return (
@@ -48,14 +52,14 @@ const WelcomeScreen = ({ navigation }: any) => {
                     source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                     style={{
                         width: "100%",
-                        height: width_container * 0.75,
+                        height: width_container * 0.6,
                         resizeMode: "contain",
                     }}
                 />
                 <View className="w-full flex justify-center items-center">
                     <View className="w-full p-10 flex justify-center items-center">
-                        <Text className="text-color-02 text-5xl text-start">Bienvenido</Text>
-                        <Text className="text-color-02 text-xl text-center pt-4">Poty, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, sunt.</Text>
+                        <Text className="text-color-02 text-4xl text-start">Bienvenido</Text>
+                        <Text className="text-color-02 text-base text-center pt-4">Poty, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, sunt.</Text>
                     </View>
                     <TouchableOpacity className="my-2"
                         onPress={() => navigation.navigate('LoginScreen')}
@@ -86,7 +90,8 @@ const WelcomeScreen = ({ navigation }: any) => {
 const WelcomeNav = () => {
     return (
         <Stack.Navigator initialRouteName="Welcome" screenOptions={{
-            headerShown: false
+            headerShown: false,
+            animation: 'slide_from_right'
         }}>
             {/* welcome */}
             <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -99,13 +104,13 @@ const WelcomeNav = () => {
             {/* registers */}
             {/* client */}
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-            <Stack.Screen name="RegisterClientScreen" component={RegisterClientScreen} />
-            <Stack.Screen name="RegisterClientFormScreen" component={RegisterClientFormScreen} />
+            <Stack.Screen name="LoginPhoneScreen" component={LoginPhoneScreen} />
+            <Stack.Screen name="registerClientFormScreen" component={RegisterClientFormScreen} />
 
             {/* business */}
-            <Stack.Screen name="RegisterBusinessFormInfo" component={RegisterBusinessFormInfo} />
-            <Stack.Screen name="RegisterBusinessFormMap" component={RegisterBusinessFormMap} />
-            <Stack.Screen name="RegisterBusinessFormOwner" component={RegisterBusinessFormOwner} />
+            <Stack.Screen name="RegisterBusinessFormInfoScreen" component={RegisterBusinessFormInfoScreen} />
+            <Stack.Screen name="RegisterBusinessFormMapScreen" component={RegisterBusinessFormMapScreen} />
+            <Stack.Screen name="RegisterBusinessFormOwnerScreen" component={RegisterBusinessFormOwnerScreen} />
 
             {/* home */}
             <Stack.Screen name="HomeScreen" component={HomeScreen} />

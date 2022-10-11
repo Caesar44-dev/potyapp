@@ -12,6 +12,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 // utils
 import { width_container } from "../../utils/display"
 
+/**
+ * RegisterScreen
+ * * El registro tiene un diseño que dificulta hacerlo responsive a todos los tamaños de dispositivos moviles,
+ * * la cual algunos dispositivos seran afectados por el tamaño de el diseño maquetado en codigo
+ * 
+ * ! Recomiendo mejorar el diseño y plantear mejor el sistema de registro
+ */
+
 const RegisterScreen = ({ navigation }: any) => {
     return (
         <SafeAreaView>
@@ -34,20 +42,20 @@ const RegisterScreen = ({ navigation }: any) => {
                         opacity: 0.2
                     }}
                 />
-                <View className="flex flex-row justify-center items-center px-4 py-10">
+                <View className="flex flex-row justify-center items-center px-4 pb-10 pt-20">
                     <Image
                         source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                         className={"w-1/2"}
                         style={{
-                            height: width_container * 0.7,
+                            height: width_container * 0.5,
                             resizeMode: "contain",
                         }}
                     />
                     <View className="w-1/2">
-                        <Text className="text-3xl text-color-01 font-bold text-center pb-2">
+                        <Text className="text-xl text-color-01 font-bold text-center pb-2">
                             ¡Bienvenido a POTY!
                         </Text>
-                        <Text className="text-base text-color-01 font-bold text-center">
+                        <Text className="text-sm text-color-01 font-bold text-center">
                             Encuentra u ofrece todo lo relacionado a belleza
                         </Text>
                     </View>
@@ -58,11 +66,11 @@ const RegisterScreen = ({ navigation }: any) => {
                         width: width_container * 1.1,
                     }}
                 >
-                    <Text className="text-color-02 text-2xl">Deseas unirte como</Text>
+                    <Text className="text-color-02 text-xl">Deseas unirte como</Text>
                     <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                     <View className="w-full flex justify-center items-center">
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('RegisterBusinessFormInfo')}
+                            onPress={() => navigation.navigate('RegisterBusinessFormInfoScreen')}
                             className="flex flex-row justify-between items-center w-3/4 h-12 bg-color-04 my-2 rounded-2xl px-8"
                         >
                             <FontAwesome5 name={"store"} size={22} color={"#F2F1F1"} />
@@ -70,7 +78,7 @@ const RegisterScreen = ({ navigation }: any) => {
                             <Feather name={"scissors"} size={22} color={"#F2F1F1"} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('RegisterClientScreen')}
+                            onPress={() => navigation.navigate('registerClientFormScreen')}
                             className="flex flex-row justify-between items-center w-3/4 h-12 bg-color-04 my-2 rounded-2xl px-8"
                         >
                             <AntDesign name={"user"} size={25} color={"#F2F1F1"} />

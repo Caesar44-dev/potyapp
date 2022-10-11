@@ -1,5 +1,9 @@
 import { Dimensions } from 'react-native';
 
+/**
+ * Dimenciones para tamaños de dispositivos
+ */
+
 const { height, width } = Dimensions.get('window');
 
 export const setHeight = (h: any) => (height / 100) * h;
