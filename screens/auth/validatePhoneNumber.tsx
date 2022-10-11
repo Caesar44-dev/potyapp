@@ -8,8 +8,12 @@ import FormInputPhoneOTP from '../../components/form/formInputPhoneOTP';
 // utils
 import { width_container } from "../../utils/display"
 
-const ValidatePhoneNumberScreen = ({ navigation }: any) => {
+/**
+ * ValidatePhoneNumberScreen
+ * 
+ */
 
+const ValidatePhoneNumberScreen = ({ navigation }: any) => {
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
             <Image
@@ -28,7 +32,7 @@ const ValidatePhoneNumberScreen = ({ navigation }: any) => {
                 source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                 style={{
                     width: "100%",
-                    height: width_container * 0.75,
+                    height: width_container * 0.6,
                     resizeMode: "contain",
                 }}
             />
@@ -38,7 +42,7 @@ const ValidatePhoneNumberScreen = ({ navigation }: any) => {
                     width: width_container * 1.1,
                 }}
             >
-                <Text className="text-color-02 text-2xl">Confirma tu número</Text>
+                <Text className="text-color-02 text-xl">Confirma tu número</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                 <Text className="text-color-02 text-base pt-2 pb-5 px-10 text-center font-bold">Revisa el PIN enviado a tu número celular y digitalo aquí</Text>
                 <FormInputPhoneOTP />

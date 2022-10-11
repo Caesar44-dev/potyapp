@@ -1,0 +1,93 @@
+{
+    "config": {
+        "adapter": [Function xhrAdapter
+        ],
+        "data": "{\"empresaHeader\":{\"nombre\":\"PRUEBA123\",\"rubroId\":\"2\",\"responsable\":\"prueba133\",\"correo\":\"kokapad206@civikli.com\",\"celular\":\"04120472514\",\"empresaDireccion\":{\"state\":\"estado3\",\"city\":\"ciudad3\",\"direccion\":\"prueba123\",\"latitud\":24.178752810257958,\"longitud\":-102.7257445529046}}}",
+        "env": {
+            "Blob": [Function Blob
+            ],
+            "FormData": [Function FormData
+            ]
+        },
+        "headers": [Object
+        ],
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "post",
+        "timeout": 0,
+        "transformRequest": [
+            [Function transformRequest
+            ]
+        ],
+        "transformResponse": [
+            [Function transformResponse
+            ]
+        ],
+        "transitional": {
+            "clarifyTimeoutError": false,
+            "forcedJSONParsing": true,
+            "silentJSONParsing": true
+        },
+        "url": "http://potywebapi-dev.eba-vup7yxft.us-west-1.elasticbeanstalk.com/api/Empresas",
+        "validateStatus": [Function validateStatus
+        ],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": {
+        "mensaje": "Correo:kokapad206@civikli.com ya registrado!"
+    },
+    "headers": {
+        "content-length": "58",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 07 Oct 2022 19:53:05 GMT",
+        "server": "Kestrel",
+        "x-powered-by": "ASP.NET"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "content-length": "58",
+            "content-type": "application/json; charset=utf-8",
+            "date": "Fri, 07 Oct 2022 19:53:05 GMT",
+            "server": "Kestrel",
+            "x-powered-by": "ASP.NET"
+        },
+        "_method": "POST",
+        "_perfKey": "network_XMLHttpRequest_http://potywebapi-dev.eba-vup7yxft.us-west-1.elasticbeanstalk.com/api/Empresas",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "{\"mensaje\":\"Correo:kokapad206@civikli.com ya registrado!\"}",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "http://potywebapi-dev.eba-vup7yxft.us-west-1.elasticbeanstalk.com/api/Empresas",
+        "readyState": 4,
+        "responseHeaders": {
+            "Content-Length": "58",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Fri, 07 Oct 2022 19: 53: 05 GMT", "Server": "Kestrel", "X-Powered-By": "ASP.NET"}, "responseURL": "http: //potywebapi-dev.eba-vup7yxft.us-west-1.elasticbeanstalk.com/api/Empresas", "status": 400, "timeout": 0, "upload": {}, "withCredentials": true}, "status": 400, "statusText": undefined}

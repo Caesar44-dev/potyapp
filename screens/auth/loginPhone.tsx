@@ -10,7 +10,22 @@ import { setWidth, setHeight, width_container } from "../../utils/display"
 // configs
 const phoneUtil = PhoneNumberUtil.getInstance();
 
-const RegisterClientScreen = ({ navigation, ...props }: any) => {
+/**
+ * LoginPhone
+ * 
+ * ? Donde esta planteado que metodos y funciones tiene que tener el inicio de sesion con telefono.
+ * 
+ * ? Porque hay un inicio de sesion de clientes con numero de telefono, si en la documentacion hay un endpoint
+ * ? que registra los usuarios con correo y contraseña?.
+ * 
+ * ? Si no hay un numero registrado este no puede iniciar sesion con telefono?
+ * 
+ * ! El diseño y el planteamiento de la api no tienen sentido, si no entiendo yo, menos lo entendera un usuario comun y corriente,
+ * ! porfavor recomiendo un informe o analisis escrito o grafico de como funciona este sistema de inicio de sesion con numero de telefono.
+ * 
+ */
+
+const LoginPhone = ({ navigation, ...props }: any) => {
 
     const [phoneNumber, setphoneNumber] = useState("");
 
@@ -61,7 +76,7 @@ const RegisterClientScreen = ({ navigation, ...props }: any) => {
                 source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                 style={{
                     width: "100%",
-                    height: width_container * 0.75,
+                    height: width_container * 0.6,
                     resizeMode: "contain",
                 }}
             />
@@ -71,7 +86,7 @@ const RegisterClientScreen = ({ navigation, ...props }: any) => {
                     width: width_container * 1.1,
                 }}
             >
-                <Text className="text-color-02 text-2xl">Ingresa tu Telefono</Text>
+                <Text className="text-color-02 text-xl">Ingresa tu Telefono</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                 <Text className="text-color-02 text-base pt-2 px-10 text-center font-bold">
                     Se enviara un MSM a tu número celular.
@@ -233,4 +248,4 @@ const RegisterClientScreen = ({ navigation, ...props }: any) => {
     );
 };
 
-export default RegisterClientScreen;
+export default LoginPhone;

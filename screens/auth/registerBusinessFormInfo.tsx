@@ -14,26 +14,28 @@ import { AuthContext } from '../../context/auth/auth';
 // utils
 import { width_container } from "../../utils/display"
 
-// configs
-// const phoneUtil = PhoneNumberUtil.getInstance();
 
-const RegisterBusinessFormInfo = ({ navigation }: any) => {
+/**
+ * RegisterBusinessFormInfoScreen
+ * 
+ * ? En los formularios de seleccion, se llaman endpoints? que debo llamar para mostrar los diferentes datos de ubicacion?
+ * ? o si no, que datos debo colocar?
+ * 
+ */
+
+const RegisterBusinessFormInfoScreen = ({ navigation }: any) => {
 
     // api simulation
     const [companyName, setcompanyName] = useState("");
-    const [location, setlocation] = useState("");
+    const [specialization, setspecialization] = useState(0);
     const [addressCompany, setaddressCompany] = useState("");
-    const [specialization, setspecialization] = useState("");
-    const [phoneNumber, setphoneNumber] = useState("");
+    const [state, setstate] = useState("");
+    const [city, setcity] = useState("");
 
     // validation
     const [errors, seterrors] = useState<any>({});
-    const [loading, setloading] = useState<any>(false);
 
-    // context simulation api
-    const { login } = useContext(AuthContext);
-
-    const validate = () => {
+    const validated = () => {
         Keyboard.dismiss();
         let isValid = true;
 
@@ -42,8 +44,8 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
             isValid = false;
         }
 
-        if (!location) {
-            handleError('Campo requerido', 'location');
+        if (!specialization) {
+            handleError('Campo requerido', 'specialization');
             isValid = false;
         }
 
@@ -52,8 +54,13 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
             isValid = false;
         }
 
-        if (!specialization) {
-            handleError('Campo requerido', 'specialization');
+        if (!state) {
+            handleError('Campo requerido', 'state');
+            isValid = false;
+        }
+
+        if (!city) {
+            handleError('Campo requerido', 'city');
             isValid = false;
         }
 
@@ -81,14 +88,19 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
         //     isValid = false;
         // }
 
-        if (!phoneNumber) {
-            handleError('Campo requerido', 'phoneNumber');
-            isValid = false;
-        }
+        // if (!phoneNumber) {
+        //     handleError('Campo requerido', 'phoneNumber');
+        //     isValid = false;
+        // }
 
         if (isValid) {
-            login();
-            navigation.navigate('RegisterBusinessFormMap');
+            navigation.navigate("RegisterBusinessFormMapScreen", {
+                companyName,
+                specialization,
+                addressCompany,
+                state,
+                city
+            });
         }
     };
 
@@ -125,19 +137,19 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         placeholderText="Nombre de la empresa"
                         iconName="home"
                         error={errors.companyName}
-                        onChangeText={(companyName: any) => setcompanyName(companyName)}
+                        onChangeText={(companyName: any) => setcompanyName(companyName.toUpperCase())}
                         onFocus={() => handleError(null, 'companyName')}
                     />
                     <FormSelect
-                        selectedValue={location}
-                        error={errors.location}
-                        onValueChange={(itemValue: any) => setlocation(itemValue)}
-                        onFocus={() => handleError(null, 'location')}
+                        selectedValue={specialization}
+                        error={errors.specialization}
+                        onValueChange={(itemValue: any) => setspecialization(itemValue)}
+                        onFocus={() => handleError(null, 'specialization')}
                     >
-                        <Picker.Item label={"Selecione el lugar"} value={null} enabled={false} />
-                        <Picker.Item label={"Monterrey, Nuevo leon"} value={"location1"} enabled={true} />
-                        <Picker.Item label={"location 2"} value={"location2"} enabled={true} />
-                        <Picker.Item label={"location 3"} value={"location3"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"Rubro de Especialización"} value={null} enabled={false} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"Barberia"} value={"1"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"specialization 2"} value={"2"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"specialization 3"} value={"3"} enabled={true} />
                     </FormSelect>
                     <FormInput
                         labelValue={addressCompany}
@@ -148,17 +160,28 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         onFocus={() => handleError(null, 'addressCompany')}
                     />
                     <FormSelect
-                        selectedValue={specialization}
-                        error={errors.specialization}
-                        onValueChange={(itemValue: any) => setspecialization(itemValue)}
-                        onFocus={() => handleError(null, 'specialization')}
+                        selectedValue={state}
+                        error={errors.state}
+                        onValueChange={(itemValue: any) => setstate(itemValue)}
+                        onFocus={() => handleError(null, 'state')}
                     >
-                        <Picker.Item label={"Selecione una especializacion"} value={null} enabled={false} />
-                        <Picker.Item label={"Barberia"} value={"specialization1"} enabled={true} />
-                        <Picker.Item label={"specialization 2"} value={"specialization2"} enabled={true} />
-                        <Picker.Item label={"specialization 3"} value={"specialization3"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"Selecione la estado"} value={null} enabled={false} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"estado 1"} value={"estado1"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"estado 2"} value={"estado2"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"estado 3"} value={"estado3"} enabled={true} />
                     </FormSelect>
-                    <FormInput
+                    <FormSelect
+                        selectedValue={city}
+                        error={errors.city}
+                        onValueChange={(itemValue: any) => setcity(itemValue)}
+                        onFocus={() => handleError(null, 'city')}
+                    >
+                        <Picker.Item style={{ fontSize: 14 }} label={"Selecione la ciudad"} value={null} enabled={false} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"ciudad 1"} value={"ciudad1"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"ciudad 2"} value={"ciudad2"} enabled={true} />
+                        <Picker.Item style={{ fontSize: 14 }} label={"ciudad 3"} value={"ciudad3"} enabled={true} />
+                    </FormSelect>
+                    {/* <FormInput
                         labelValue={phoneNumber}
                         placeholderText="Telefono"
                         iconName="phone"
@@ -166,7 +189,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         onChangeText={(phoneNumber: any) => setphoneNumber(phoneNumber)}
                         onFocus={() => handleError(null, 'phoneNumber')}
                         keyboardType={"numeric"}
-                    />
+                    /> */}
                 </View>
                 <View className="w-full px-10 pt-6 flex flex-row justify-center items-center">
                     <View className="w-12 h-12 border-2 border-color-08 rounded-full flex justify-center items-center">
@@ -200,8 +223,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         <Text className="text-color-01 text-lg">Regresar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={validate}
-                        // onPress={() => navigation.navigate('RegisterBusinessFormMap')}
+                        onPress={validated}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Siguiente</Text>
@@ -212,4 +234,4 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
     );
 };
 
-export default RegisterBusinessFormInfo;
+export default RegisterBusinessFormInfoScreen;

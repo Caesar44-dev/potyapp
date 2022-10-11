@@ -6,13 +6,49 @@ import MapView, { Marker } from 'react-native-maps';
 // utils
 import { width_container } from "../../utils/display"
 
-const RegisterBusinessFormInfo = ({ navigation }: any) => {
+/**
+ * RegisterBusinessFormInfoScreen
+ * 
+ * * El registro tiene un diseño que dificulta hacerlo responsive a todos los tamaños de dispositivos moviles,
+ * * la cual algunos dispositivos seran afectados por el tamaño de el diseño maquetado en codigo
+ * 
+ * ! Recomiendo mejorar el diseño, ya que el mapa es muy pequeño y se dificulta elegir la ubicacion
+ * 
+ */
+
+const RegisterBusinessFormMapScreen = ({ route, navigation }: any) => {
 
     // example country
     const [origin, setorigin] = useState({
         latitude: 24.178752810257958,
         longitude: -102.7257445529046
     })
+
+    const {
+        companyName,
+        specialization,
+        addressCompany,
+        state,
+        city
+    } = route.params;
+
+    const validated = () => {
+        let isValid = true;
+
+        if (!origin) {
+            isValid = false;
+        }
+        if (isValid) {
+            navigation.navigate("RegisterBusinessFormOwnerScreen", {
+                companyName,
+                specialization,
+                addressCompany,
+                state,
+                city,
+                origin
+            });
+        }
+    };
 
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
@@ -90,7 +126,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         <Text className="text-color-01 text-lg">Regresar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterBusinessFormOwner')}
+                        onPress={validated}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Siguiente</Text>
@@ -101,4 +137,4 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
     );
 };
 
-export default RegisterBusinessFormInfo;
+export default RegisterBusinessFormMapScreen;

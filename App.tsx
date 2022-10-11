@@ -11,10 +11,10 @@ import { AuthProvider } from './context/auth/auth';
 
 export default function App() {
     return (
-        <AuthProvider>
-            <NavigationContainer>
+        <NavigationContainer>
+            <AuthProvider>
                 <WelcomeNav />
-            </NavigationContainer>
-        </AuthProvider>
+            </AuthProvider>
+        </NavigationContainer>
     );
 }

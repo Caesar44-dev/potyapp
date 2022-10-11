@@ -1,9 +1,1 @@
-// const a = {
-//     "nombre": "EMPRESAUNO",
-//     "responsable": "jefe 1",
-//     "correo": "empresa1@example.com",
-//     "celular": "+523323341",
-//     "rubroId": 1
-//   }
-
-// curl -H "Authorization: "  
+curl -X POST "http://potywebapi-dev.eba-vup7yxft.us-west-1.elasticbeanstalk.com/api/Empresas" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"empresaHeader\":{\"nombre\":\"EMPRESAPRUEBA3\",\"rubroId\":3,\"responsable\":\"PRUEBA3\",\"correo\":\"kokapad206@civikli.com\",\"celular\":\"0000000000\",\"empresaDireccion\":{\"state\":\"ESTADO\",\"city\":\"CIUDAD\",\"direccion\":\"DIRECCION\",\"latitud\":\"555555\",\"longitud\":\"555555\"}}}"

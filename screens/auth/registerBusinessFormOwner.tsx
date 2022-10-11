@@ -11,32 +11,38 @@ import { AuthContext } from '../../context/auth/auth';
 // utils
 import { width_container } from "../../utils/display"
 
-const RegisterBusinessFormInfo = ({ navigation }: any) => {
+/**
+ * RegisterBusinessFormOwnerScreen
+ *
+ */
 
-    // api simulation
+const RegisterBusinessFormOwnerScreen = ({ route, navigation }: any) => {
+
+    const {
+        companyName,
+        specialization,
+        addressCompany,
+        state,
+        city,
+        origin
+    } = route.params;
+
     const [nameOwner, setnameOwner] = useState("");
-    const [dniOwner, setdniOwner] = useState("");
     const [phoneNumber, setphoneNumber] = useState("");
     const [email, setemail] = useState("");
-    const [password, setpassword] = useState("");
 
     // validation
     const [errors, seterrors] = useState<any>({});
 
-    // context simulation api
-    const { login } = useContext(AuthContext);
+    // context api
+    const { register } = useContext(AuthContext);
 
-    const validate = () => {
+    const validate = async () => {
         Keyboard.dismiss();
         let isValid = true;
 
         if (!nameOwner) {
             handleError('Campo requerido', 'nameOwner');
-            isValid = false;
-        }
-
-        if (!dniOwner) {
-            handleError('Campo requerido', 'dniOwner');
             isValid = false;
         }
 
@@ -54,18 +60,19 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
             isValid = false;
         }
 
-        if (!password) {
-            handleError('Campo requerido', 'password');
-            isValid = false;
-
-        } else if (password.length < 5) {
-            handleError('Longitud mínima de la contraseña de 5', 'password');
-            isValid = false;
-        }
-
         if (isValid) {
-            login();
-            navigation.navigate('HomeScreen');
+            await register(
+                companyName,
+                specialization,
+                nameOwner,
+                email,
+                phoneNumber,
+                state,
+                city,
+                addressCompany,
+                origin.latitude,
+                origin.longitude,
+            )
         }
     };
 
@@ -104,14 +111,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         onChangeText={(nameOwner: any) => setnameOwner(nameOwner)}
                         onFocus={() => handleError(null, 'nameOwner')}
                     />
-                    <FormInput
-                        labelValue={dniOwner}
-                        placeholderText="DNI responsable"
-                        iconName="idcard"
-                        error={errors.dniOwner}
-                        onChangeText={(dniOwner: any) => setdniOwner(dniOwner)}
-                        onFocus={() => handleError(null, 'dniOwner')}
-                    />
+
                     <FormInput
                         labelValue={phoneNumber}
                         placeholderText="Telefono"
@@ -121,6 +121,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         onFocus={() => handleError(null, 'phoneNumber')}
                         keyboardType={"numeric"}
                     />
+
                     <FormInput
                         labelValue={email}
                         placeholderText="Correo electronico"
@@ -129,15 +130,7 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                         onChangeText={(email: any) => setemail(email)}
                         onFocus={() => handleError(null, 'email')}
                     />
-                    <FormInput
-                        labelValue={password}
-                        placeholderText="Contraseña"
-                        iconName="lock"
-                        secureTextEntry={true}
-                        error={errors.password}
-                        onChangeText={(password: any) => setpassword(password)}
-                        onFocus={() => handleError(null, 'password')}
-                    />
+
                 </View>
                 <View className="w-full px-10 pt-6 flex flex-row justify-center items-center">
                     <View className="w-8 h-8 border-2 border-color-08 rounded-full flex justify-center items-center">
@@ -172,7 +165,6 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={validate}
-                        // onPress={() => navigation.navigate('RegisterBusinessFormMap')}
                         className="flex justify-center items-center w-2/5 h-12 bg-color-04 my-2 mx-2 rounded-2xl"
                     >
                         <Text className="text-color-01 text-lg">Siguiente</Text>
@@ -183,4 +175,4 @@ const RegisterBusinessFormInfo = ({ navigation }: any) => {
     );
 };
 
-export default RegisterBusinessFormInfo;
+export default RegisterBusinessFormOwnerScreen;

@@ -5,6 +5,10 @@ import { View, Text, Image, SafeAreaView } from 'react-native'
 // utils
 import { width_container } from "../../utils/display"
 
+/**
+ * HomeScreen
+ */
+
 const HomeScreen = ({ navigation }: any) => {
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">

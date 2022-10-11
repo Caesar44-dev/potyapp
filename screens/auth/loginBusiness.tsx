@@ -11,22 +11,38 @@ import FormInput from '../../components/form/formInput';
 // utils
 import { width_container } from "../../utils/display"
 
+/**
+ * LoginBusinessScreen
+ * 
+ * * Recuperar contraseña tiene un diseño que dificulta hacerlo responsive a todos los tamaños de dispositivos moviles,
+ * * la cual algunos dispositivos seran afectados por el tamaño de el diseño maquetado en codigo.
+ * 
+ * ! Recomiendo mejorar el diseño y plantear mejor el sistema de registro.
+ * 
+ * ? Cuando es llamado el endpoint ForgetPassword, que funcion programo despues?, no tiene sentido, enviar un correo 
+ * ? y el modal no redirecione o no se cierre.
+ * 
+ * ? Porque esta diseñado (¿No recibiste tu correo?, Reenviar Correo), si el modal tiene que cerrarse por logica
+ * ? despues de ejecutar el endpoint ForgetPassword.
+ * 
+ * ! Recomiendo replantear y mejorar el diseño para poder desarrollar el proyecto como el cliente requiere.
+ */
+
 const LoginBusinessScreen = ({ navigation }: any) => {
 
     // states
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-
     const [recoverEmail, setrecoverEmail] = useState();
 
-    // context simulation api
+    // api contexts
     const { login } = useContext(AuthContext);
 
     const [isModalVisible, setisModalVisible] = useState(false);
-
     const changeModalVisible = (bool: boolean) => {
         setisModalVisible(bool);
     }
+
     return (
         <SafeAreaView className="w-full h-full flex flex-col justify-center items-center">
             <Image
@@ -45,7 +61,7 @@ const LoginBusinessScreen = ({ navigation }: any) => {
                 source={require("../../assets/logo/android/drawable-hdpi/POTY.png")}
                 style={{
                     width: "100%",
-                    height: width_container * 0.75,
+                    height: width_container * 0.6,
                     resizeMode: "contain",
                 }}
             />
@@ -55,7 +71,7 @@ const LoginBusinessScreen = ({ navigation }: any) => {
                     width: width_container * 1.1,
                 }}
             >
-                <Text className="text-color-02 text-2xl">Inicia Sesión</Text>
+                <Text className="text-color-02 text-xl">Inicia Sesión</Text>
                 <View className="w-11/12 h-[2px] bg-color-08 my-5"></View>
                 <View className="w-full">
                     <FormInput
