@@ -64,35 +64,6 @@ const RegisterBusinessFormInfoScreen = ({ navigation }: any) => {
             isValid = false;
         }
 
-        // if (!inputs.email) {
-        //     handleError('Porfavor ingrese un correo', 'email');
-        //     isValid = false;
-
-        // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-        //     handleError('Porfavor ingrese un correo valido', 'email');
-        //     isValid = false;
-        // }
-
-        // if (!inputs.password) {
-        //     handleError('Please input password', 'password');
-        //     isValid = false;
-
-        // } else if (inputs.password.length < 5) {
-        //     handleError('Min password length of 5', 'password');
-        //     isValid = false;
-        // }
-
-        // const parsedNumber = phoneUtil.parse(phoneNumber, "MX");
-        // if (phoneUtil.isValidNumber(parsedNumber)) {
-        //     handleError('Campo requerido', 'phoneNumber');
-        //     isValid = false;
-        // }
-
-        // if (!phoneNumber) {
-        //     handleError('Campo requerido', 'phoneNumber');
-        //     isValid = false;
-        // }
-
         if (isValid) {
             navigation.navigate("RegisterBusinessFormMapScreen", {
                 companyName,
@@ -181,15 +152,6 @@ const RegisterBusinessFormInfoScreen = ({ navigation }: any) => {
                         <Picker.Item style={{ fontSize: 14 }} label={"ciudad 2"} value={"ciudad2"} enabled={true} />
                         <Picker.Item style={{ fontSize: 14 }} label={"ciudad 3"} value={"ciudad3"} enabled={true} />
                     </FormSelect>
-                    {/* <FormInput
-                        labelValue={phoneNumber}
-                        placeholderText="Telefono"
-                        iconName="phone"
-                        error={errors.phoneNumber}
-                        onChangeText={(phoneNumber: any) => setphoneNumber(phoneNumber)}
-                        onFocus={() => handleError(null, 'phoneNumber')}
-                        keyboardType={"numeric"}
-                    /> */}
                 </View>
                 <View className="w-full px-10 pt-6 flex flex-row justify-center items-center">
                     <View className="w-12 h-12 border-2 border-color-08 rounded-full flex justify-center items-center">

@@ -8,12 +8,14 @@ import WelcomeNav from './screens/welcome/welcome';
 
 // contexts
 import { AuthProvider } from './context/auth/auth';
+import NavTabs from './components/navigation/navTabs';
 
 export default function App() {
     return (
         <NavigationContainer>
             <AuthProvider>
-                <WelcomeNav />
+                {/* <WelcomeNav /> */}
+                <NavTabs />
             </AuthProvider>
         </NavigationContainer>
     );
